@@ -16,17 +16,10 @@ int balance;
 int apuesta;
 int cartaJugador1, cartaJugador2, cartaCrupier1;
 int numeroPartida;
+int arrayCartas[palos][cartas];
 
-//Array bidimensional con el valor de las cartas en su respectiva columna:
-int arrayCartas[palos][cartas] = {
-    {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10},
-    {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10},
-    {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10},
-    {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10}
-};
-
-//Reset al array despues de cada partida:
-void resetArrayCartas() {
+//Construir el array de cada partida:
+void buildArrayCartas() {
     for (int i = 0; i < palos; ++i) {
         for (int j = 0; j < cartas; ++j) {
             arrayCartas[i][j] = (j + 1 <= 10) ? (j + 1) : 10;
@@ -199,6 +192,8 @@ int main() {
     cout << "\n";
 
     do {
+        buildArrayCartas();
+
         cout << "Numero de partidas: \x1B[33m" << numeroPartida << "\x1B[37m\n\n";
         cout << "Tu balance actual es: \x1B[32m$" << balance << "\x1B[37m" << endl;
         cout << "Cuanto dinero quieres apostar?: \x1B[32m";
@@ -227,8 +222,6 @@ int main() {
 
         verificarTotales(totalCartasJugador, totalCartasCrupier);
         cout << "-----------------------" << endl;
-
-        resetArrayCartas();
 
         if (balance <= 0) {
             this_thread::sleep_for(chrono::seconds(3));
